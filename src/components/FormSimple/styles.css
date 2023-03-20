@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.top {
+  padding-top: 10px !important;
+}
+
+.grad {
+  background: -webkit-linear-gradient(90deg, #f70b6d9f, #f76d1188);
+  background: linear-gradient(90deg, #68358e4b, #1d679843);
+}
