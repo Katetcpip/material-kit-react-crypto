@@ -6,6 +6,16 @@
 }
 
 .grad {
-  background: -webkit-linear-gradient(90deg, #f70b6d9f, #f76d1188);
   background: linear-gradient(90deg, #68358e4b, #1d679843);
+}
+
+@layer components {
+  .spn {
+    @apply text-sm font-thin z-30 font-thin text-indigo-800;
+  }
+}
+
+.textColor {
+  color: rgb(41, 24, 43) !important;
+  font-family: "Montserrat", sans-serif !important;
 }

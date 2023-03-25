@@ -1,7 +1,35 @@
 import "./styles.scss";
 import { useState } from "react";
 
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+
+import { ThemeProvider } from "styled-components";
+import { darkTheme, lightTheme, GlobalStyles } from "./theme";
+
+const schema = yup.object({
+  email: yup.string().email("Not a proper email").required("This field is required"),
+});
+
 const Payment = () => {
+  const [theme, setTheme] = useState("light");
+
+  const switchTheme = () => {
+    theme === "light" ? setTheme("dark") : setTheme("light");
+  };
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
   const [email, setEmail] = useState("");
   const money = [
     {
@@ -36,15 +64,6 @@ const Payment = () => {
     },
   ];
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    const item = {
-      email,
-    };
-    setEmail("");
-    console.log(item);
-  };
-
   const handleClick2 = (name) => {
     const item = {
       name,
@@ -53,59 +72,62 @@ const Payment = () => {
   };
 
   return (
-    <div className="min-h-screen grad">
-      <h1
-        data-glitch=" Select currency"
-        className="font-bold text-3xl text-center pt-10 font glitch"
-      ></h1>
-      <div className="lg:w-1/2 w-11/12 m-auto justify-start flex flex-row flex-wrap lg:pt-10 pt-28">
-        {money.length > 0 &&
-          money.map((item) => {
-            return (
-              <div
-                className="flex md:w-1/4 sm:w-1/3 md:w-1/3 w-1/2 h-fit justify-center items-center"
-                key={item.id}
-              >
-                <div className="flex flex-row justify-center w-full p-4 mb-2">
-                  <div className="flex flex-col items-center">
-                    <div
-                      onClick={() => handleClick2(item.name)}
-                      className="bg-white rounded-2xl px-2 text-sm text-slate-800 hover:shadow-md h flex hover:scale-105 hover:duration-150"
-                    >
-                      <img src={item.img} className="p-4 object-contain cursor-pointer" />
-                    </div>
-                    <div className="text-slate-700 text-lg text-center font font-semibold">
-                      {item.name}
+    <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+      <GlobalStyles />
+      <div className="min-h-screen grad">
+        <div className="flex lg:justify-center justify-end items-center h-fit w-full pt-1 z-60">
+          <button className="p-2 pt-4 h-8 w-8" onClick={switchTheme}>
+            <img alt="" src="https://cdn-icons-png.flaticon.com/512/116/116254.png" />
+          </button>
+        </div>
+
+        <h1
+          data-glitch="Select currency"
+          className="font-bold text-3xl text-center pt-10 font glitch"
+        ></h1>
+        <div className="lg:w-1/2 w-11/12 m-auto justify-start flex flex-row flex-wrap lg:pt-10 pt-28">
+          {money.length > 0 &&
+            money.map((item) => {
+              return (
+                <div
+                  className="flex md:w-1/4 sm:w-1/3 md:w-1/3 w-1/2 h-fit justify-center items-center"
+                  key={item.id}
+                >
+                  <div className="flex flex-row justify-center w-full p-4 pl-2 pr-2 mb-2">
+                    <div className="flex flex-col items-center">
+                      <div
+                        onClick={() => {
+                          handleClick2(item.name);
+                        }}
+                        className="bg-white rounded-2xl px-2 text-sm text-slate-800 hover:shadow-md focus:outline-none h flex hover:scale-105 hover:duration-150"
+                      >
+                        <img src={item.img} className="p-4 object-contain cursor-pointer" />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
-      </div>
+              );
+            })}
+        </div>
 
-      <form className="flex flex-col items-center">
-        <input
-          placeholder="example@mail.ru"
-          type="text"
-          title="Username should only contain lowercase letters. e.g. john"
-          pattern="[a-z]{1,15}"
-          className=" w-1/2 rounded-lg p-2 text-sm font-semibold mt-4"
-          value={email}
-          onChange={(event) => {
-            let email = event.target.value;
-            setEmail(email);
-          }}
-        />
-        <button
-          className="flex justify-center w-1/2 bg-stone-800 rounded-lg p-2 text-white text-sm font-semibold mt-4 hover:bg-slate-800 mb-10"
-          type="submit"
-          onClick={(event) => handleClick(event)}
-        >
-          CONFIRM
-        </button>
-      </form>
-    </div>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center">
+          <input
+            placeholder="example@mail.ru"
+            type="email"
+            className=" w-1/2 rounded-lg p-2 text-sm font-semibold mt-4"
+            {...register("email")}
+          />
+          {errors.email && <span className="spn lg:w-1/2 lg:pl-2">this field is required 💔</span>}
+
+          <button
+            className="flex justify-center w-1/2 bg-stone-800 rounded-lg p-2 text-white text-sm font-semibold mt-4 hover:bg-slate-800 mb-10"
+            type="submit"
+          >
+            CONFIRM
+          </button>
+        </form>
+      </div>
+    </ThemeProvider>
   );
 };
 export default Payment;

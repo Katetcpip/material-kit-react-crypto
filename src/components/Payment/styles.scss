@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 .grad {
-  background: -webkit-linear-gradient(90deg, #f70b6d9f, #f76d1188);
-  background: linear-gradient(90deg, #68358e4b, #1d679843);
+  background: linear-gradient(90deg, #000000d8, #1470b2b5);
+  background: radial-gradient(circle, #6627f8, #ffffff);
 }
 
 .h {
@@ -13,6 +13,11 @@
 
 .font {
   font-family: "Cantarell", sans-serif;
+}
+
+.spn {
+  color: white;
+  @apply font-normal text-start flex justify-start;
 }
 
 .glitch {

@@ -11,170 +11,178 @@ import MKBox from "components/MKBox";
 import MKInput from "components/MKInput";
 import MKTypography from "components/MKTypography";
 
+import { useForm } from "react-hook-form";
+import Img1 from "components/img1";
+import Img2 from "components/img2";
+import Img4 from "components/img4";
+
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 
-function FormSimple() {
-  const [checked, setChecked] = useState(true);
-  const handleChecked = () => setChecked(!checked);
+import { ThemeProvider } from "styled-components";
+import { darkTheme, lightTheme, GlobalStyles } from "./theme";
 
-  const [name, setName] = useState("");
-  const [msg, setMsg] = useState("");
-  const [value, setValue] = useState("");
+const schema = yup
+  .object({
+    name: yup.string().required("This field is required"),
+    msg: yup.string().required("This field is required"),
+    value: yup
+      .number("sfddfdf")
+      .positive("Value must be positive")
+      .required("This field is required"),
+  })
+  .required();
+
+function FormSimple() {
+  const [theme, setTheme] = useState("light");
+
+  const switchTheme = () => {
+    theme === "light" ? setTheme("dark") : setTheme("light");
+  };
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const navigate = useNavigate();
-  const handleClick = (e) => {
+  const onSubmit = (data, e) => {
     e.preventDefault();
-
-    const item = {
-      name,
-      msg,
-      value,
-    };
-
-    setMsg("");
-    setName("");
-    setValue("");
-
-    console.log(item);
+    console.log(data);
     navigate("/payment");
   };
 
+  const [checked, setChecked] = useState(true);
+  const handleChecked = () => setChecked(!checked);
+
   return (
-    <div className="grad min-h-screen overflow-hidden">
-      <div className="flex justify-end w-fit z-10 lg:-mt-10 lg:-mb-20 -mb-0 -mt-0 lg:mr-36 mr-10 z-0">
-        {" "}
-        <img
-          src="https://cryptologos.cc/logos/polygon-matic-logo.png"
-          className="lg:w-2/12 lg:h-3/12 w-3/12 h-4/12 rotate-12"
-        />
+    <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+      <GlobalStyles />
+
+      <div className="grad min-h-screen overflow-hidden">
+        <div className="flex justify-center items-center h-fit w-full pt-1 z-60">
+          <button className="p-2 pt-4 h-8 w-8" onClick={switchTheme}>
+            <img alt="" src="https://cdn-icons-png.flaticon.com/512/116/116254.png" />
+          </button>
+        </div>
+
+        <Img1 />
+        <MKBox component="section" className="top " py={12}>
+          <Container className="lg:mt-0 mt-2">
+            <Img2 />
+            <Grid
+              container
+              item
+              justifyContent="center"
+              xs={10}
+              lg={7}
+              mx="auto"
+              textAlign="center"
+              className="z-20 flex flex-col"
+            >
+              <MKTypography
+                variant="h3"
+                mb={1}
+                className="base z-20 lg:pt-4 pt-20 font-extrabold lg:text-4xl textColor lg:pb-4"
+              >
+                JUST DONATE.
+              </MKTypography>
+              {/* <MKTypography variant="h6" mb={1} className="base z-20 -mt-2 font-semibold textColor">
+                and make it simple...
+              </MKTypography> */}
+            </Grid>
+
+            <Grid container item xs={12} lg={7} sx={{ mx: "auto" }}>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <MKBox width="100%" autoComplete="off">
+                  <MKBox p={3} className="rounded-md shadow-md bg-white bg-opacity-75">
+                    <Grid container spacing={3}>
+                      <Grid item xs={12} md={12}>
+                        <MKInput
+                          variant="standard"
+                          className="z-10"
+                          label="Nickname"
+                          fullWidth
+                          {...register("name")}
+                        />
+                        {errors.name && <span className="spn">💔this field is required</span>}
+                      </Grid>
+                      <Grid item xs={12}>
+                        <MKInput
+                          variant="standard"
+                          className="z-30"
+                          label="Your Message"
+                          multiline
+                          fullWidth
+                          rows={6}
+                          {...register("msg")}
+                        />
+                        {errors.msg && <span className=" spn">💔this field is required</span>}
+                      </Grid>
+                      <Grid item xs={12} md={12}>
+                        <MKInput
+                          variant="standard"
+                          label="Value"
+                          fullWidth
+                          type="text"
+                          defaultValue="0"
+                          {...register("value")}
+                          className="z-20"
+                        />
+                        {errors.value && (
+                          <span className="spn">
+                            <ol className="p-2 pl-0 w-fit mt-2">
+                              <li>🥺value is positive</li>
+                              <li>🥺value is number</li>
+                            </ol>
+                          </span>
+                        )}
+                      </Grid>
+                      <Grid item xs={12} alignItems="center" ml={-1} className="z-20">
+                        <Switch checked={checked} onChange={handleChecked} />
+                        <MKTypography
+                          variant="button"
+                          fontWeight="regular"
+                          color="text"
+                          ml={-1}
+                          sx={{ cursor: "pointer", userSelect: "none" }}
+                          onClick={handleChecked}
+                        >
+                          &nbsp;&nbsp;I agree the&nbsp;
+                        </MKTypography>
+                        <MKTypography
+                          className="base z-20"
+                          component="a"
+                          href="#"
+                          variant="button"
+                          fontWeight="regular"
+                          color="dark"
+                        >
+                          Terms and Conditions
+                        </MKTypography>
+                      </Grid>
+                    </Grid>
+                    <Grid container item justifyContent="center" xs={12} my={2} className="m-0">
+                      <button
+                        className="flex justify-center w-1/2 bg-stone-800 rounded-lg p-2 text-white text-sm font-semibold absolute mt-10 z-20 opacity-90"
+                        type="submit"
+                      >
+                        NEXT
+                      </button>
+                      <Img4 />
+                    </Grid>
+                  </MKBox>
+                </MKBox>
+              </form>
+            </Grid>
+          </Container>
+        </MKBox>
       </div>
-      <MKBox component="section" className="top " py={12}>
-        <Container>
-          <div className="w-fit lg:ml-44 ml-4 -mt-8">
-            {" "}
-            <img
-              src="https://cryptologos.cc/logos/tron-trx-logo.png"
-              className="lg:w-1/12 w-2/12 h-2/12 lg:h-1/12 absolute md:-top-10 top-10"
-            />
-          </div>
-
-          <Grid
-            container
-            item
-            justifyContent="center"
-            xs={10}
-            lg={7}
-            mx="auto"
-            textAlign="center"
-            className="z-20"
-          >
-            <MKTypography variant="h3" mb={1} className="base z-20">
-              You can send a donate here
-            </MKTypography>
-          </Grid>
-
-          <Grid container item xs={12} lg={7} sx={{ mx: "auto" }}>
-            <MKBox width="100%" component="form" method="post" autoComplete="off">
-              <MKBox p={3}>
-                <Grid container spacing={3}>
-                  <Grid item xs={12} md={12}>
-                    <MKInput
-                      variant="standard"
-                      className="z-30"
-                      label="Nickname"
-                      fullWidth
-                      value={name}
-                      onChange={(event) => {
-                        let name = event.target.value;
-                        setName(name);
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <MKInput
-                      variant="standard"
-                      className="z-30"
-                      label="Your Message"
-                      multiline
-                      fullWidth
-                      rows={6}
-                      value={msg}
-                      onChange={(event) => {
-                        let msg = event.target.value;
-                        setMsg(msg);
-                      }}
-                    />
-                  </Grid>
-
-                  <div className="w-fit lg:ml-44 ml-4 -mt-8">
-                    {" "}
-                    <img
-                      src="https://pngimg.com/uploads/bitcoin/small/bitcoin_PNG47.png"
-                      className="absolute lg:top-36 top-60 lg:left-20 -left-24 z-0 -rotate-12"
-                    />
-                  </div>
-
-                  <Grid item xs={12} md={12}>
-                    <MKInput
-                      variant="standard"
-                      label="Value"
-                      fullWidth
-                      value={value}
-                      className="z-20"
-                      onChange={(event) => {
-                        let value = event.target.value;
-                        let val = value.replace(/[^0-9]/g, "");
-                        setValue(val);
-                      }}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} alignItems="center" ml={-1} className="z-20">
-                    <Switch checked={checked} onChange={handleChecked} />
-                    <MKTypography
-                      variant="button"
-                      fontWeight="regular"
-                      color="text"
-                      ml={-1}
-                      sx={{ cursor: "pointer", userSelect: "none" }}
-                      onClick={handleChecked}
-                    >
-                      &nbsp;&nbsp;I agree the&nbsp;
-                    </MKTypography>
-                    <MKTypography
-                      className="base z-20"
-                      component="a"
-                      href="#"
-                      variant="button"
-                      fontWeight="regular"
-                      color="dark"
-                    >
-                      Terms and Conditions
-                    </MKTypography>
-                  </Grid>
-                </Grid>
-                <Grid container item justifyContent="center" xs={12} my={2}>
-                  <button
-                    className="flex justify-center w-1/2 bg-stone-800 rounded-lg p-2 text-white text-sm font-semibold absolute mt-10 z-20 opacity-90"
-                    type="submit"
-                    onClick={(event) => handleClick(event)}
-                  >
-                    NEXT
-                  </button>
-                  <div className="flex justify-end w-fit -mt-14 lg:-mr-0 -mr-10">
-                    {" "}
-                    <img
-                      src="https://www.pngall.com/wp-content/uploads/10/Ethereum-Logo-PNG-HD-Image.png"
-                      className="absolute md:top-44 top-80 md:left-96 left-60 rotate-12 md:h-4/6 md:w-1/6 h-1/4 w-1/4 z-0"
-                    />
-                  </div>
-                </Grid>
-              </MKBox>
-            </MKBox>
-          </Grid>
-        </Container>
-      </MKBox>
-    </div>
+    </ThemeProvider>
   );
 }
 

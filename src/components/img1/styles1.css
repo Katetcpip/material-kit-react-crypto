@@ -1,0 +1,11 @@
+img.small-rotate {
+  -webkit-transition: all 1s ease;
+  transition: all 0.7s ease;
+}
+
+img.small-rotate:hover {
+  -webkit-transform: rotate(20deg) scale(2) translate(20px, 20px);
+  /* Градусы поворота можно изменить по необходимости */
+  transform: rotate(20deg) scale(1.2) translateX(-20px) translateY(10px);
+  /* Градусы поворота можно изменить по необходимости */
+}
