@@ -18,7 +18,6 @@ import Img4 from "components/img4";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
 
 import { ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme, GlobalStyles } from "./theme";
@@ -49,11 +48,9 @@ function FormSimple() {
     resolver: yupResolver(schema),
   });
 
-  const navigate = useNavigate();
   const onSubmit = (data, e) => {
     e.preventDefault();
     console.log(data);
-    navigate("/payment");
   };
 
   const [checked, setChecked] = useState(true);

@@ -7,7 +7,7 @@ import Payment from "components/Payment";
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<App />} /> <Route path="/payment" element={<Payment />} />{" "}
+      <Route path="/" element={<Payment />} /> <Route path="/payment" element={<App />} />{" "}
     </Routes>{" "}
   </BrowserRouter>,
   document.getElementById("root")

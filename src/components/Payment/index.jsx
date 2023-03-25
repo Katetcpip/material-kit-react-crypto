@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 
 import { ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme, GlobalStyles } from "./theme";
+import { useNavigate } from "react-router-dom";
 
 const schema = yup.object({
   email: yup.string().email("Not a proper email").required("This field is required"),
@@ -26,8 +27,11 @@ const Payment = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  const navigate = useNavigate();
   const onSubmit = (data) => {
     console.log(data);
+    navigate("/payment");
   };
 
   const [email, setEmail] = useState("");
