@@ -41,37 +41,37 @@ const Payment = () => {
   const [email, setEmail] = useState("");
   const money = [
     {
-      name: "apt",
+      name: "APT",
       img: "https://aptosfoundation.org/assets/logomark/PNG/Aptos_mark_BLK-909b80e008685d22df54870ca38313008c2c15f0.png",
       id: 1,
       isActive: true,
     },
     {
-      name: "avax",
+      name: "AVAX",
       img: "https://cryptologos.cc/logos/avalanche-avax-logo.png",
       id: 2,
       isActive: true,
     },
     {
-      name: "bnb",
+      name: "BNB",
       img: "https://upload.wikimedia.org/wikipedia/commons/f/fc/Binance-coin-bnb-logo.png",
       id: 3,
       isActive: true,
     },
     {
-      name: "eth",
+      name: "ETH",
       img: "https://www.pngall.com/wp-content/uploads/10/Ethereum-Logo-PNG-HD-Image.png",
       id: 4,
       isActive: false,
     },
     {
-      name: "matic",
+      name: "MATIC",
       img: "https://seeklogo.com/images/P/polygon-matic-logo-1DFDA3A3A8-seeklogo.com.png",
       id: 5,
       isActive: true,
     },
     {
-      name: "tron",
+      name: "TRON",
       img: "https://cryptologos.cc/logos/tron-trx-logo.png",
       id: 6,
       isActive: true,
@@ -121,7 +121,7 @@ const Payment = () => {
                           item.isActive === false
                             ? "bg-violet-300 hover:none border-2 border-solid border-violet-600 scale-90 opacity-50"
                             : item.isActive === true && localStorage.getItem("theme") === "dark"
-                            ? "bg-violet-900 bg-opacity-30 hover:scale-95 hover:duration-150 hover:shadow-md "
+                            ? "bg-violet-900 bg-opacity-30 hover:scale-90 hover:duration-150 hover:shadow-md "
                             : "bg-white hover:scale-95 hover:duration-150 hover:shadow-md ",
                           "rounded-2xl px-2 text-sm text-slate-800 h flex flex-col"
                         )}
