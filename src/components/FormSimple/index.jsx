@@ -86,9 +86,15 @@ function FormSimple() {
               </p>
             </Grid>
 
-            <Grid item xs={12} lg={7} sx={{ mx: "auto" }} className="flex flex-col lg:mt-10 mt-10">
+            <Grid
+              item
+              xs={12}
+              lg={7}
+              sx={{ mx: "auto" }}
+              className="flex flex-col lg:mt-10 mt-10 md:w-3/4"
+            >
               <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="flex flex-col w-full">
+                <div className="flex flex-col items-center w-full">
                   <div
                     className={
                       localStorage.getItem("theme") === "light" ? "mainForm1" : "mainForm2"
@@ -97,7 +103,7 @@ function FormSimple() {
                     <Grid
                       container
                       spacing={3}
-                      className="relative z-80 lg:pr-4 lg:pl-4 pl-4 pr-4 p-12"
+                      className="relative z-50 lg:pr-4 lg:pl-4 pl-4 pr-4 p-12"
                     >
                       <Grid item xs={12} md={12}>
                         <input
