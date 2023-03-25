@@ -13,9 +13,14 @@ export const lightTheme = {
 };
 
 export const GlobalStyles = createGlobalStyle`
-body {
-  background: ${({ theme }) => theme.background}; 
-  color: ${({ theme }) => theme.textColor};
-  transition: all 0.50s linear;
-  }
+ .grad {
+  background: ${(props) => props.theme.background};
+  transition: .3s ease;
+ }
+ .textColor {
+  color: ${(props) => props.theme.textColor};
+ } 
+ .mainFrom{
+  background-color: ${(props) => props.theme.backgroundColor};
+ }
 `;

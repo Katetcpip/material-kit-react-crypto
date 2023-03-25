@@ -7,20 +7,16 @@
 }
 
 .h {
-  height: 124px;
-  width: 140px;
+  height: 100px;
+  width: 100px;
+  background-size: contain;
 }
 
 .font {
   font-family: "Cantarell", sans-serif;
 }
 
-.spn {
-  color: white;
-  @apply font-normal text-start flex justify-start;
-}
-
-.glitch {
+.glitchLight {
   font: {
     size: 2.2em;
     family: "Raleway", sans-serif;
@@ -66,8 +62,61 @@
   }
 }
 
+.glitchDark {
+  font: {
+    size: 2.2em;
+    family: "Raleway", sans-serif;
+    weight: 700;
+    line-height: 25px;
+  }
+  text-decoration: none;
+  text-transform: uppercase;
+  position: absolute;
+  top: 7%;
+  left: 3%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  color: #fff;
+  letter-spacing: 5px;
+  &:before,
+  &:after {
+    display: block;
+    content: attr(data-glitch);
+    text-transform: uppercase;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0.8;
+  }
+  &:after {
+    color: rgb(159, 43, 159);
+    z-index: -2;
+  }
+  &:before {
+    color: rgb(175, 175, 196);
+    z-index: -1;
+  }
+  &:hover {
+    &:before {
+      animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both 5;
+    }
+    &:after {
+      animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both 5;
+    }
+  }
+}
+
 @media only screen and (max-width: 400px) {
-  .glitch {
+  .glitchLight {
+    font-size: 3em;
+    letter-spacing: 5px;
+    line-height: 40px;
+    top: 5%;
+    left: 8%;
+  }
+  .glitchDark {
     font-size: 3em;
     letter-spacing: 5px;
     line-height: 40px;
@@ -105,4 +154,15 @@
   to {
     transform: translate(0);
   }
+}
+
+.mainForm {
+  @apply rounded-md shadow-md p-10 relative z-50;
+  background-color: white;
+  opacity: 80%;
+}
+
+.textColor {
+  color: rgb(41, 24, 43) !important;
+  font-family: "Montserrat", sans-serif !important;
 }

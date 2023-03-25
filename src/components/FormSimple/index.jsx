@@ -1,15 +1,10 @@
 import { useState } from "react";
-import "./styles.css";
+import "./styles.scss";
 
 // @mui material components
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Switch from "@mui/material/Switch";
-
-// Material Kit 2 React components
-import MKBox from "components/MKBox";
-import MKInput from "components/MKInput";
-import MKTypography from "components/MKTypography";
 
 import { useForm } from "react-hook-form";
 import Img1 from "components/img1";
@@ -38,6 +33,9 @@ function FormSimple() {
 
   const switchTheme = () => {
     theme === "light" ? setTheme("dark") : setTheme("light");
+    theme === "light"
+      ? localStorage.setItem("theme", "dark")
+      : localStorage.setItem("theme", "light");
   };
 
   const {
@@ -57,78 +55,75 @@ function FormSimple() {
   const handleChecked = () => setChecked(!checked);
 
   return (
-    <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+    <ThemeProvider theme={localStorage.getItem("theme") === "light" ? lightTheme : darkTheme}>
       <GlobalStyles />
 
-      <div className="grad min-h-screen overflow-hidden">
+      <div className="grad min-h-screen h-fit pb-32">
         <div className="flex justify-center items-center h-fit w-full pt-1 z-60">
-          <button className="p-2 pt-4 h-8 w-8" onClick={switchTheme}>
+          <button className="p-2 pt-4 h-10 w-10" onClick={switchTheme}>
             <img alt="" src="https://cdn-icons-png.flaticon.com/512/116/116254.png" />
           </button>
         </div>
 
         <Img1 />
-        <MKBox component="section" className="top " py={12}>
+        <div className="top" py={12}>
           <Container className="lg:mt-0 mt-2">
-            <Img2 />
+            <Img2 theme={localStorage.getItem("theme")} />
             <Grid
-              container
-              item
-              justifyContent="center"
+              className="flex flex-col justify-center items-center mx-auto text-center z-20 "
               xs={10}
               lg={7}
-              mx="auto"
-              textAlign="center"
-              className="z-20 flex flex-col"
             >
-              <MKTypography
-                variant="h3"
+              <p
                 mb={1}
-                className="base z-20 lg:pt-4 pt-20 font-extrabold lg:text-4xl textColor lg:pb-4"
+                className={
+                  localStorage.getItem("theme") === "light"
+                    ? "base z-20 lg:pt-4 lg:pt-10 pt-10 font-extrabold lg:text-5xl text-3xl textColorLight lg:pb-1"
+                    : "base z-20 lg:pt-4 lg:pt-10 pt-10 font-extrabold lg:text-5xl text-3xl textColorDark lg:pb-1"
+                }
               >
                 JUST DONATE.
-              </MKTypography>
-              {/* <MKTypography variant="h6" mb={1} className="base z-20 -mt-2 font-semibold textColor">
-                and make it simple...
-              </MKTypography> */}
+              </p>
             </Grid>
 
-            <Grid container item xs={12} lg={7} sx={{ mx: "auto" }}>
+            <Grid item xs={12} lg={7} sx={{ mx: "auto" }} className="flex flex-col lg:mt-10 mt-10">
               <form onSubmit={handleSubmit(onSubmit)}>
-                <MKBox width="100%" autoComplete="off">
-                  <MKBox p={3} className="rounded-md shadow-md bg-white bg-opacity-75">
-                    <Grid container spacing={3}>
+                <div className="flex flex-col w-full">
+                  <div
+                    className={
+                      localStorage.getItem("theme") === "light" ? "mainForm1" : "mainForm2"
+                    }
+                  >
+                    <Grid
+                      container
+                      spacing={3}
+                      className="relative z-80 lg:pr-4 lg:pl-4 pl-4 pr-4 p-12"
+                    >
                       <Grid item xs={12} md={12}>
-                        <MKInput
-                          variant="standard"
-                          className="z-10"
-                          label="Nickname"
-                          fullWidth
+                        <input
+                          className="z-10 rounded-md w-full p-2 bgStyle"
+                          placeholder="Nickname"
+                          type="text"
                           {...register("name")}
                         />
                         {errors.name && <span className="spn">💔this field is required</span>}
                       </Grid>
                       <Grid item xs={12}>
-                        <MKInput
-                          variant="standard"
-                          className="z-30"
-                          label="Your Message"
-                          multiline
-                          fullWidth
+                        <input
+                          className="z-10 rounded-md w-full p-2 z-30 pb-20 bgStyle"
+                          placeholder="Your Message"
+                          type="text"
                           rows={6}
                           {...register("msg")}
                         />
                         {errors.msg && <span className=" spn">💔this field is required</span>}
                       </Grid>
                       <Grid item xs={12} md={12}>
-                        <MKInput
-                          variant="standard"
-                          label="Value"
-                          fullWidth
+                        <input
+                          className="rounded-md w-full p-2 relative z-50 color-indigo-800 bgStyle"
+                          placeholder="Value"
                           type="text"
-                          defaultValue="0"
                           {...register("value")}
-                          className="z-20"
                         />
                         {errors.value && (
                           <span className="spn">
@@ -139,45 +134,38 @@ function FormSimple() {
                           </span>
                         )}
                       </Grid>
-                      <Grid item xs={12} alignItems="center" ml={-1} className="z-20">
-                        <Switch checked={checked} onChange={handleChecked} />
-                        <MKTypography
+                      <Grid item xs={12} alignItems="center" ml={-1} className="flex flex-row z-20">
+                        <Switch checked={checked} onChange={handleChecked} color="secondary" />
+                        <div
                           variant="button"
-                          fontWeight="regular"
-                          color="text"
                           ml={-1}
                           sx={{ cursor: "pointer", userSelect: "none" }}
                           onClick={handleChecked}
+                          className="flex flex-row lg:text-base text-xs"
                         >
-                          &nbsp;&nbsp;I agree the&nbsp;
-                        </MKTypography>
-                        <MKTypography
-                          className="base z-20"
-                          component="a"
-                          href="#"
-                          variant="button"
-                          fontWeight="regular"
-                          color="dark"
-                        >
-                          Terms and Conditions
-                        </MKTypography>
+                          I agree the Terms and Conditions
+                        </div>
                       </Grid>
                     </Grid>
-                    <Grid container item justifyContent="center" xs={12} my={2} className="m-0">
+                    <Grid
+                      xs={12}
+                      my={2}
+                      className="m-0 flex w-full md:justify-start justify-center"
+                    >
                       <button
-                        className="flex justify-center w-1/2 bg-stone-800 rounded-lg p-2 text-white text-sm font-semibold absolute mt-10 z-20 opacity-90"
+                        className="lg:w-1/4 w-1/2 bg-stone-800 hover:bg-stone-900 rounded-lg p-2 text-white text-sm font-semibold absolute mt-4 z-20 opacity-90"
                         type="submit"
                       >
                         NEXT
                       </button>
                       <Img4 />
                     </Grid>
-                  </MKBox>
-                </MKBox>
+                  </div>
+                </div>
               </form>
             </Grid>
           </Container>
-        </MKBox>
+        </div>
       </div>
     </ThemeProvider>
   );

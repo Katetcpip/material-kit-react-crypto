@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.top {
+  padding-top: 10px !important;
+}
+
+.grad {
+  background: linear-gradient(90deg, #68358e4b, #1d679843);
+}
+
+@layer components {
+  .spn {
+    @apply text-sm font-thin z-30 font-thin text-indigo-800;
+  }
+}
+
+.textColorLight {
+  color: rgb(57, 49, 71) !important;
+  font-family: "Montserrat", sans-serif !important;
+}
+
+.textColorDark {
+  color: rgba(194, 40, 71, 0.815) !important;
+  font-family: "Montserrat", sans-serif !important;
+}
+
+.bgStyle {
+  background-color: rgba(255, 255, 255, 0.007);
+  border-bottom: 3px solid #68358e4b;
+  color: black;
+}
+
+input:active,
+:hover,
+:focus {
+  outline: 0;
+  outline-offset: 0;
+}
+
+.mainForm1 {
+  @apply rounded-md shadow-md relative z-40;
+  background-color: white;
+  opacity: 80%;
+}
+
+.mainForm2 {
+  @apply rounded-md shadow-md relative z-40;
+  background-color: rgba(52, 18, 112, 0.393);
+  opacity: 80%;
+}
