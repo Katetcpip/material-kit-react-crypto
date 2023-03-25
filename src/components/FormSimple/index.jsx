@@ -112,7 +112,7 @@ function FormSimple() {
                           type="text"
                           {...register("name")}
                         />
-                        {errors.name && <span className="spn">💔this field is required</span>}
+                        {errors.name && <span className={ localStorage.getItem("theme") === "light" ? "spn" : "spn text-white"}>💔this field is required</span>}
                       </Grid>
                       <Grid item xs={12}>
                         <input
@@ -122,7 +122,7 @@ function FormSimple() {
                           rows={6}
                           {...register("msg")}
                         />
-                        {errors.msg && <span className=" spn">💔this field is required</span>}
+                        {errors.msg && <span className={ localStorage.getItem("theme") === "light" ? "spn" : "spn text-white"}>💔this field is required</span>}
                       </Grid>
                       <Grid item xs={12} md={12}>
                         <input
@@ -132,7 +132,7 @@ function FormSimple() {
                           {...register("value")}
                         />
                         {errors.value && (
-                          <span className="spn">
+                          <span className={ localStorage.getItem("theme") === "light" ? "spn" : "spn text-white"}>
                             <ol className="p-2 pl-0 w-fit mt-2">
                               <li>🥺value is positive</li>
                               <li>🥺value is number</li>
