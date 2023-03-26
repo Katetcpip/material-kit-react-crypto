@@ -111,6 +111,7 @@ function FormSimple() {
                           placeholder="Nickname"
                           type="text"
                           {...register("name")}
+                          style={{borderBottom: errors.name && '2px solid red'}}
                         />
                         {errors.name && <span className={ localStorage.getItem("theme") === "light" ? "spn" : "spn text-white"}>💔this field is required</span>}
                       </Grid>
@@ -121,6 +122,7 @@ function FormSimple() {
                           type="text"
                           rows={6}
                           {...register("msg")}
+                          style={{borderBottom: errors.msg && '2px solid red'}}
                         />
                         {errors.msg && <span className={ localStorage.getItem("theme") === "light" ? "spn" : "spn text-white"}>💔this field is required</span>}
                       </Grid>
@@ -130,6 +132,7 @@ function FormSimple() {
                           placeholder="Value"
                           type="text"
                           {...register("value")}
+                          style={{borderBottom: errors.value && '2px solid red'}}
                         />
                         {errors.value && (
                           <span className={ localStorage.getItem("theme") === "light" ? "spn" : "spn text-white"}>

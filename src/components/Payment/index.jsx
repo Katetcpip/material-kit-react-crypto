@@ -11,7 +11,8 @@ import { useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 
 const schema = yup.object({
-  email: yup.string().email("Not a proper email").required("This field is required"),
+  // email: yup.string().email("Not a proper email").required("This field is required"),
+  email: yup.string().matches(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/),
 });
 
 const Payment = () => {
@@ -38,51 +39,66 @@ const Payment = () => {
     navigate("/payment");
   };
 
-  const [email, setEmail] = useState("");
-  const money = [
+  const [money, setMoney] = useState([
     {
       name: "APT",
       img: "https://aptosfoundation.org/assets/logomark/PNG/Aptos_mark_BLK-909b80e008685d22df54870ca38313008c2c15f0.png",
       id: 1,
       isActive: true,
+      isHovered: 0
     },
     {
       name: "AVAX",
       img: "https://cryptologos.cc/logos/avalanche-avax-logo.png",
       id: 2,
       isActive: true,
+      isHovered: 0
     },
     {
       name: "BNB",
       img: "https://upload.wikimedia.org/wikipedia/commons/f/fc/Binance-coin-bnb-logo.png",
       id: 3,
       isActive: true,
+      isHovered: 0
     },
     {
       name: "ETH",
       img: "https://www.pngall.com/wp-content/uploads/10/Ethereum-Logo-PNG-HD-Image.png",
       id: 4,
       isActive: false,
+      isHovered: 0
     },
     {
       name: "MATIC",
       img: "https://seeklogo.com/images/P/polygon-matic-logo-1DFDA3A3A8-seeklogo.com.png",
       id: 5,
       isActive: true,
+      isHovered: 0
     },
     {
       name: "TRON",
       img: "https://cryptologos.cc/logos/tron-trx-logo.png",
       id: 6,
       isActive: true,
+      isHovered: 0
     },
-  ];
+  ]);
 
   const handleClick2 = (name) => {
-    const item = {
+
+    let arrHover = JSON.parse(JSON.stringify(money))
+    const itemName = {
       name,
     };
-    console.log(item);
+    console.log(itemName);
+
+    const itemHover = arrHover.find(item => item.name === name);
+    if (itemHover.isActive === true && itemHover.isHovered === 0){
+      arrHover.map(el => el.isHovered = 0)
+      itemHover.isHovered = 1;
+    } else (itemHover.isHovered = 0);
+
+    setMoney(arrHover);
   };
 
   return (
@@ -95,7 +111,8 @@ const Payment = () => {
           </button>
         </div>
 
-        <h1
+        <div className="w-full h-fit flex justify-start pl-4 lg:pt-0 pt-1">
+          <h1
           data-glitch="Select currency"
           className={
             localStorage.getItem("theme") === "dark"
@@ -103,6 +120,9 @@ const Payment = () => {
               : "font-bold text-3xl text-center pt-10 font glitchLight"
           }
         ></h1>
+        </div>
+
+
         <div className="lg:w-1/2 w-11/12 m-auto justify-start flex flex-row flex-wrap lg:pt-10 pt-28">
           {money.length > 0 &&
             money.map((item) => {
@@ -113,7 +133,7 @@ const Payment = () => {
                 >
                   <div className="flex flex-row justify-center w-full p-4 pl-2 pr-2 mb-2">
                     <div className="flex flex-col items-center">
-                      <div
+                      <button
                         onClick={() => {
                           handleClick2(item.name);
                         }}
@@ -121,14 +141,17 @@ const Payment = () => {
                           item.isActive === false
                             ? "bg-violet-300 hover:none border-2 border-solid border-violet-600 scale-90 opacity-50"
                             : item.isActive === true && localStorage.getItem("theme") === "dark"
-                            ? "bg-violet-900 bg-opacity-30 hover:scale-90 hover:duration-150 hover:shadow-md "
-                            : "bg-white hover:scale-95 hover:duration-150 hover:shadow-md ",
+                            ? "bg-gray-900 bg-opacity-40 hover:scale-90 hover:duration-150 hover:shadow-md "
+                            : "bg-white hover:scale-95 hover:duration-150 hover:shadow-md hover:border-2 hover:border-solid hover:border-violet-600",
                           "rounded-2xl px-2 text-sm text-slate-800 h flex flex-col"
                         )}
                       >
-                        <img src={item.img} className="p-2 object-contain cursor-pointer h-3/4" />
-                        <p className="text-center">{item.name}</p>
-                      </div>
+                        <input type="image" src={item.img} className="p-2 object-contain cursor-pointer h-3/4 w-full" />
+                        <p className="text-center w-full">{item.name}</p>
+                        {money[item.id - 1].isHovered === 1 && (<div className="-mt-6 -ml-4 text-xl h-12 w-12">                          
+                           <img src="https://freepngimg.com/thumb/facebook/107719-verified-badge-facebook-download-free-image.png" alt=""/>
+                        </div>)}
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -138,19 +161,21 @@ const Payment = () => {
 
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center">
           <input
+          
             placeholder="example@mail.ru"
-            type="email"
+            type="text"
             className=" w-1/2 rounded-lg p-2 text-sm font-semibold mt-4"
             {...register("email")}
+            style={{border: errors.email && '2px solid red'}}
           />
-          {errors.email && (
-            <span
+          {errors.email && ( 
+            <p
               className={
-                theme === "light" ? " text-black lg:w-1/2 lg:pl-2" : "text-white lg:w-1/2 lg:pl-2"
+                theme === "light" ? "lg:w-1/2 lg:pl-2" : "text-white lg:w-1/2 lg:pl-2"
               }
             >
               this field is required 💔
-            </span>
+            </p>
           )}
 
           <button
