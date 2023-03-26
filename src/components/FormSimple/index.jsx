@@ -20,7 +20,7 @@ import { darkTheme, lightTheme, GlobalStyles } from "./theme";
 const schema = yup
   .object({
     name: yup.string().required("This field is required"),
-    msg: yup.string().required("This field is required"),
+    msg: yup.string(),
     value: yup
       .number("sfddfdf")
       .positive("Value must be positive")
@@ -82,7 +82,7 @@ function FormSimple() {
                     : "base z-20 lg:pt-4 lg:pt-10 pt-10 font-extrabold lg:text-5xl text-3xl textColorDark lg:pb-1"
                 }
               >
-                JUST DONATE.
+                JUST DONATE
               </p>
             </Grid>
 
@@ -113,7 +113,9 @@ function FormSimple() {
                           {...register("name")}
                           style={{borderBottom: errors.name && '2px solid red'}}
                         />
-                        {errors.name && <span className={ localStorage.getItem("theme") === "light" ? "spn" : "spn text-white"}>💔this field is required</span>}
+                        {errors.name && <span className={ localStorage.getItem("theme") === "light" ? "spn flex flex-row mt-1" : "spn text-white flex flex-row mt-1"}>
+                        <img className="w-5 h-5 mr-1" alt="" src="./broken.png"/>
+                          this field is required</span>}
                       </Grid>
                       <Grid item xs={12}>
                         <input
@@ -122,9 +124,9 @@ function FormSimple() {
                           type="text"
                           rows={6}
                           {...register("msg")}
-                          style={{borderBottom: errors.msg && '2px solid red'}}
+                    
                         />
-                        {errors.msg && <span className={ localStorage.getItem("theme") === "light" ? "spn" : "spn text-white"}>💔this field is required</span>}
+                      
                       </Grid>
                       <Grid item xs={12} md={12}>
                         <input
@@ -137,8 +139,12 @@ function FormSimple() {
                         {errors.value && (
                           <span className={ localStorage.getItem("theme") === "light" ? "spn" : "spn text-white"}>
                             <ol className="p-2 pl-0 w-fit mt-2">
-                              <li>🥺value is positive</li>
-                              <li>🥺value is number</li>
+                              <li className="flex flex-row">
+                                <img className="w-5 h-6 mr-1" alt="" src="./smile.png"/>
+                                value is positive</li>
+                              <li className="flex flex-row">
+                              <img className="w-5 h-6 mr-1" alt="" src="./smile.png"/>
+                                value is number</li>
                             </ol>
                           </span>
                         )}
