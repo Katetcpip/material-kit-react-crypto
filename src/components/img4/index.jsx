@@ -2,7 +2,7 @@ import "./styles4.css";
 
 function Img4() {
   return (
-    <div className="flex justify-end w-fit absolute lg:top-52 top-60 lg:right-36 right-10 z-0">
+    <div className="circle2 flex justify-end w-fit absolute lg:top-52 top-60 lg:right-36 right-10 z-0">
       {" "}
       <img
         src="https://www.pngall.com/wp-content/uploads/10/Ethereum-Logo-PNG-HD-Image.png"

@@ -1,12 +1,26 @@
 img.small-rotate {
-  -webkit-transition: all 1s ease;
-  transition: all 1s ease;
+    -webkit-transition: all 1s ease;
+    transition: all 1s ease;
 }
 
 img.small-rotate:hover {
-  -webkit-transform: rotate(20deg) scale(1.1) translate(20px, 20px);
-  /* Градусы поворота можно изменить по необходимости */
-  transform: rotate(20deg) scale(1.1) translateX(20px) translateY(20px);
-  filter: drop-shadow(10px 0 20px #846ce5d4);
-  /* Градусы поворота можно изменить по необходимости */
+    -webkit-transform: rotate(20deg) scale(1.1) translate(20px, 20px);
+    /* Градусы поворота можно изменить по необходимости */
+    transform: rotate(20deg) scale(1.1) translateX(20px) translateY(20px);
+    filter: drop-shadow(10px 0 20px #846ce5d4);
+    /* Градусы поворота можно изменить по необходимости */
+}
+
+.circle4 {
+    position: absolute;
+    animation: circle4 7s linear infinite;
+}
+
+@keyframes circle4 {
+    0% {
+        transform: rotate(0deg) translate(-5px) rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg) translate(-5px) rotate(-360deg);
+    }
 }

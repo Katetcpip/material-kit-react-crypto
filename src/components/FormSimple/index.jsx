@@ -68,7 +68,7 @@ function FormSimple() {
         <Img1 />
         <div className="top" py={12}>
           <Container className="lg:mt-0 mt-2">
-            <Img2 theme={localStorage.getItem("theme")} />
+            <Img2  theme={localStorage.getItem("theme")} />
             <Grid
               className="flex flex-col justify-center items-center mx-auto text-center z-20 "
               xs={10}

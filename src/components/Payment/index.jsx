@@ -10,6 +10,8 @@ import { darkTheme, lightTheme, GlobalStyles } from "./theme";
 import { useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 
+import { toast } from 'wc-toast';
+
 const schema = yup.object({
   // email: yup.string().email("Not a proper email").required("This field is required"),
   email: yup.string().matches(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/),
@@ -35,8 +37,21 @@ const Payment = () => {
 
   const navigate = useNavigate();
   const onSubmit = (data) => {
-    console.log(data);
-    navigate("/payment");
+
+    let currency = money.filter( m => m.isHovered === 1);
+    if (currency.length === 0){ 
+      // alert ("Choose currency!")
+      toast('Select currency!');
+      console.log("sddsd")
+    }
+    else {
+      navigate("/payment");
+      let item = [
+        data.email,
+        currency[0].name
+      ]
+      console.log(item)}
+  
   };
 
   const [money, setMoney] = useState([
@@ -104,6 +119,7 @@ const Payment = () => {
   return (
     <ThemeProvider theme={localStorage.getItem("theme") === "dark" ? darkTheme : lightTheme}>
       <GlobalStyles />
+      <wc-toast></wc-toast>
       <div className="min-h-screen grad">
         <div className="flex lg:justify-center justify-end items-center h-fit w-full pt-1 z-60">
           <button className="p-2 pt-4 h-8 w-8" onClick={switchTheme}>
