@@ -17,9 +17,9 @@ img.small-rotate:hover {
 
 @keyframes circle3 {
     0% {
-        transform: rotate(0deg) translate(-30px) rotate(0deg);
+        transform: rotate(360deg) translate(-30px) rotate(-360deg);
     }
     100% {
-        transform: rotate(360deg) translate(-30px) rotate(-360deg);
+        transform: rotate(0deg) translate(-30px) rotate(0deg);
     }
 }
